@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>민솔투어 - 오늘의 특가 슬라이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; overflow-x: hidden; }
+        
+        /* 무한 슬라이드 애니메이션 설정 */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-400px * 3 - 2.5rem * 3)); }
+        }
+
+        .slider-track {
+            display: flex;
+            width: calc(400px * 6 + 2.5rem * 6); /* 카드 3개 + 복제본 3개 */
+            animation: scroll 30s linear infinite;
+            gap: 2.5rem;
+        }
+
+        .slider-container:hover .slider-track {
+            animation-play-state: paused;
+        }
+
+        .deal-card {
+            width: 400px;
+            flex-shrink: 0;
+        }
+
+        /* 네비게이션 드롭다운 수정된 스타일 */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex; /* Flexbox 적용 */
+            flex-direction: column; /* 세로 정렬 */
+        }
+        .group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #4b5563;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+            color: #2563eb;
+            padding-left: 24px; /* 호버 시 약간 이동하는 효과 */
+        }
+
+        .progress-bar { height: 6px; border-radius: 3px; background: #eee; overflow: hidden; }
+        .progress-fill { height: 100%; transition: width 1s ease-in-out; }
+        
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .timer-animate { animation: pulse-red 2s infinite; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- HEADER AREA -->
+    <header class="sticky top-0 bg-white z-50 border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16 gap-4">
+                <a href="index.html" class="text-2xl font-black tracking-tighter text-blue-600 cursor-pointer italic shrink-0 transition-opacity hover:opacity-80">MINSOL TOUR</a>
+                <div class="hidden md:flex flex-1 max-w-2xl h-11 bg-gray-50 border border-gray-200 rounded-full flex items-center px-5 text-sm text-gray-500 shadow-inner">
+                    <i data-lucide="search" class="w-4 h-4 mr-3 text-blue-500"></i> 
+                    <span>무한 혜택, 오늘의 특가를 확인하세요!</span>
+                </div>
+                <div class="flex items-center gap-6 text-gray-500 shrink-0">
+                    <button class="flex flex-col items-center group"><i data-lucide="user" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">마이메뉴</span></button>
+                    <button class="flex flex-col items-center group"><i data-lucide="shopping-bag" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">예약내역</span></button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="border-t border-gray-50 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="nav-container flex items-center gap-10 h-12 text-[15px] font-bold text-gray-700 whitespace-nowrap overflow-x-visible">
+                    <li class="flex items-center gap-1.5 text-blue-600 cursor-pointer hover:opacity-80"><i data-lucide="menu" class="w-4 h-4"></i> 전체메뉴</li>
+
+                    <!-- 1. 여행지 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행지 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="asia.html" class="dropdown-item">아시아</a>
+                            <a href="europe.html" class="dropdown-item">유럽</a>
+                            <a href="americas.html" class="dropdown-item">미주</a>
+                            <a href="Southeast Asia.html" class="dropdown-item">동남아</a>
+                            <a href="korea.html" class="dropdown-item">국내</a>
+                        </div>
+                    </li>
+
+                    <!-- 2. 테마여행 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">테마여행 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="honeymoon.html" class="dropdown-item">신혼여행</a>
+                            <a href="#" class="dropdown-item">가족여행</a>
+                            <a href="#" class="dropdown-item">혼자여행</a>
+                            <a href="#" class="dropdown-item">럭셔리</a>
+                            <a href="#" class="dropdown-item">액티비티</a>
+                            <a href="#" class="dropdown-item">힐링/휴양</a>
+                            <a href="#" class="dropdown-item">성지/이색</a>
+                        </div>
+                    </li>
+
+                    <!-- 3. 특가/프로모션 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">특가/프로모션 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="special price.html" class="dropdown-item">오늘의 특가</a>
+                            <a href="#" class="dropdown-item">타임딜</a>
+                            <a href="#" class="dropdown-item">얼리버드</a>
+                            <a href="#" class="dropdown-item">마감임박</a>
+                        </div>
+                    </li>
+
+                    <!-- 4. 여행정보 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행정보 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-52 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="guides.html" class="dropdown-item">여행 가이드</a>
+                            <a href="#" class="dropdown-item">비자 정보</a>
+                            <a href="#" class="dropdown-item">날씨 정보</a>
+                            <a href="#" class="dropdown-item">준비물 체크리스트</a>
+                        </div>
+                    </li>
+
+                    <!-- 5. 고객센터 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">고객센터 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="inqury.html" class="dropdown-item">문의하기</a>
+                            <a href="#" class="dropdown-item">예약확인</a>
+                            <a href="#" class="dropdown-item">FAQ</a>
+                            <a href="#" class="dropdown-item">공지사항</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- DEALS HERO SECTION (기존과 동일) -->
+    <section class="bg-gray-900 py-20 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-red-600 px-5 py-1.5 rounded-full text-xs font-black uppercase italic mb-6 timer-animate">
+                <i data-lucide="flame" class="w-3 h-3 fill-white"></i> Non-Stop Special Offers
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter mb-8 leading-tight">INFINITY <span class="text-blue-500">DEALS</span></h1>
+            
+            <div class="flex justify-center items-center gap-8 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-full max-w-lg mx-auto">
+                <div class="text-center">
+                    <span id="hours" class="text-3xl font-black italic text-white">14</span>
+                    <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Hours</p>
+                </div>
+                <div class="text-2xl font-black italic text-blue-500">:</div>
+                <div class="text-center">
+                    <span id="minutes" class="text-3xl font-black italic text-white">28</span>
+                    <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Mins</p>
+                </div>
+                <div class="text-2xl font-black italic text-blue-500">:</div>
+                <div class="text-center">
+                    <span id="seconds" class="text-3xl font-black italic text-white">45</span>
+                    <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Secs</p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 blur-[100px] rounded-full"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-red-600/10 blur-[100px] rounded-full"></div>
+    </section>
+
+    <!-- INFINITE SLIDER SECTION (기존과 동일) -->
+    <section class="py-24 overflow-hidden slider-container">
+        <div class="max-w-7xl mx-auto px-4 mb-12">
+            <h2 class="text-3xl font-black italic tracking-tighter uppercase underline decoration-blue-500 decoration-4 underline-offset-8">Live Specials</h2>
+        </div>
+
+        <div class="slider-track px-4">
+            <!-- 1번 상품 -->
+            <div class="deal-card group bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
+                <div class="relative aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute top-6 left-6 flex flex-col gap-2">
+                        <span class="bg-red-600 text-white text-[11px] font-black px-4 py-1.5 rounded-full shadow-lg italic uppercase">65% OFF</span>
+                    </div>
+                </div>
+                <div class="p-10 flex-1 flex flex-col">
+                    <div class="text-[11px] font-black text-blue-500 mb-3 italic uppercase tracking-wider">Bali, Indonesia</div>
+                    <h3 class="text-xl font-black text-gray-800 leading-tight italic mb-6">발리 우붓 림바 짐바란 6일 #풀빌라업그레이드</h3>
+                    <div class="mt-auto space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-[11px] font-bold italic">
+                                <span class="text-red-500">마감 임박! 85% 완료</span>
+                                <span class="text-gray-400">2석 남음</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill w-[85%] bg-red-500"></div></div>
+                        </div>
+                        <div class="flex items-end justify-between pt-4">
+                            <span class="text-2xl font-black text-gray-900 italic">990,000<span class="text-sm">원~</span></span>
+                            <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center group-hover:bg-blue-600 transition-colors"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2번 상품 -->
+            <div class="deal-card group bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
+                <div class="relative aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute top-6 left-6 flex flex-col gap-2">
+                        <span class="bg-blue-600 text-white text-[11px] font-black px-4 py-1.5 rounded-full shadow-lg italic uppercase">40% OFF</span>
+                    </div>
+                </div>
+                <div class="p-10 flex-1 flex flex-col">
+                    <div class="text-[11px] font-black text-blue-500 mb-3 italic uppercase tracking-wider">Danang, Vietnam</div>
+                    <h3 class="text-xl font-black text-gray-800 leading-tight italic mb-6">다낭 신라모노그램 5일 #전일정식사포함</h3>
+                    <div class="mt-auto space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-[11px] font-bold italic">
+                                <span class="text-blue-500">판매중 40% 진행</span>
+                                <span class="text-gray-400">8석 남음</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill w-[40%] bg-blue-500"></div></div>
+                        </div>
+                        <div class="flex items-end justify-between pt-4">
+                            <span class="text-2xl font-black text-gray-900 italic">750,000<span class="text-sm">원~</span></span>
+                            <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center group-hover:bg-blue-600 transition-colors"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3번 상품 -->
+            <div class="deal-card group bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
+                <div class="relative aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute top-6 left-6 flex flex-col gap-2">
+                        <span class="bg-blue-600 text-white text-[11px] font-black px-4 py-1.5 rounded-full shadow-lg italic uppercase">35% OFF</span>
+                    </div>
+                </div>
+                <div class="p-10 flex-1 flex flex-col">
+                    <div class="text-[11px] font-black text-blue-500 mb-3 italic uppercase tracking-wider">Kyoto, Japan</div>
+                    <h3 class="text-xl font-black text-gray-800 leading-tight italic mb-6">교토 료칸 감성 여행 3일 #온천포함</h3>
+                    <div class="mt-auto space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-[11px] font-bold italic">
+                                <span class="text-blue-500">판매중 65% 진행</span>
+                                <span class="text-gray-400">4석 남음</span>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill w-[65%] bg-blue-500"></div></div>
+                        </div>
+                        <div class="flex items-end justify-between pt-4">
+                            <span class="text-2xl font-black text-gray-900 italic">578,000<span class="text-sm">원~</span></span>
+                            <div class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center group-hover:bg-blue-600 transition-colors"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 복제본들 -->
+            <div class="deal-card group bg-white rounded-[50px] overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                <div class="relative aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
+                </div>
+                <div class="p-10 flex-1 flex flex-col">
+                    <div class="text-[11px] font-black text-blue-500 mb-3 italic uppercase tracking-wider">Bali, Indonesia</div>
+                    <h3 class="text-xl font-black text-gray-800 leading-tight italic mb-6">발리 우붓 림바 짐바란 6일 #풀빌라업그레이드</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (SNS 로고 수정됨) -->
+    <footer class="bg-gray-900 text-white pt-24 pb-12 rounded-t-[80px]">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2 space-y-8">
+                    <div class="text-4xl font-black italic text-blue-500">MINSOL TOUR</div>
+                    <p class="text-gray-400 text-sm max-w-sm">가장 안전하고 즐거운 길로 안내하겠습니다.</p>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">Customer Service</h5>
+                    <div class="text-3xl font-black text-blue-500 mb-4 italic">1588-0000</div>
+                    <p class="text-gray-400 text-xs italic">평일 09:00 - 18:00 (공휴일 휴무)</p>
+                </div>
+                <div class="space-y-4">
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">About Us</h5>
+                    <ul class="text-sm text-gray-400 space-y-4 font-bold italic"><li>회사소개</li><li>이용약관</li><li class="text-blue-500">개인정보처리방침</li><li>여행약관</li></ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[11px] text-gray-500 font-bold uppercase italic">© 2024 MINSOL TOUR. Dream Beyond Reality.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            startTimer();
+        });
+
+        function startTimer() {
+            let h = 14; let m = 28; let s = 45;
+            setInterval(() => {
+                s--;
+                if(s < 0) { s = 59; m--; }
+                if(m < 0) { m = 59; h--; }
+                document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>민솔투어 - 꿈꾸던 여행의 시작</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        
+        /* 네비게이션 드롭다운 설정 */
+        .nav-container::-webkit-scrollbar { display: none; }
+        .nav-container { -ms-overflow-style: none; scrollbar-width: none; overflow-x: visible; }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #4b5563;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f9fafb;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover {
+            background-color: #eff6ff;
+            color: #2563eb;
+            padding-left: 24px;
+        }
+
+        /* 슬라이드 배너 애니메이션 */
+        .banner-slide { display: none; transition: opacity 1s ease-in-out; }
+        .banner-slide.active { display: flex; opacity: 1; }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- HEADER AREA -->
+    <header class="sticky top-0 bg-white z-50 border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16 gap-4">
+               <a href="index.html" class="text-2xl font-black tracking-tighter text-blue-600 cursor-pointer italic shrink-0 transition-opacity hover:opacity-80">MINSOL TOUR</a>
+                <div class="hidden md:flex flex-1 max-w-2xl h-11 bg-gray-50 border border-gray-200 rounded-full flex items-center px-5 text-sm text-gray-500 shadow-inner">
+                    <i data-lucide="search" class="w-4 h-4 mr-3 text-blue-500"></i> 
+                    <span>어디로 떠나고 싶으신가요?</span>
+                </div>
+                <div class="flex items-center gap-6 text-gray-500 shrink-0">
+                    <button class="flex flex-col items-center group"><i data-lucide="user" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">마이메뉴</span></button>
+                    <button class="flex flex-col items-center group"><i data-lucide="shopping-bag" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">예약내역</span></button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="border-t border-gray-50 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="nav-container flex items-center gap-10 h-12 text-[15px] font-bold text-gray-700 whitespace-nowrap overflow-x-visible">
+                    <li class="flex items-center gap-1.5 text-blue-600 cursor-pointer hover:opacity-80"><i data-lucide="menu" class="w-4 h-4"></i> 전체메뉴</li>
+
+                    <!-- 1. 여행지 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행지 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="asia.html" class="dropdown-item">아시아</a><a href="europe.html" class="dropdown-item">유럽</a><a href="americas.html" class="dropdown-item">미주</a><a href="Southeast Asia.html" class="dropdown-item">동남아</a><a href="korea.html" class="dropdown-item">국내</a>
+                        </div>
+                    </li>
+
+                    <!-- 2. 테마여행 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">테마여행 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="honeymoon.html" class="dropdown-item">신혼여행</a><a href="#" class="dropdown-item">가족여행</a><a href="#" class="dropdown-item">혼자여행</a><a href="#" class="dropdown-item">럭셔리</a><a href="#" class="dropdown-item">액티비티</a><a href="#" class="dropdown-item">힐링/휴양</a><a href="#" class="dropdown-item">성지/이색</a>
+                        </div>
+                    </li>
+
+                    <!-- 3. 특가/프로모션 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">특가/프로모션 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="special price.html" class="dropdown-item">오늘의 특가</a><a href="#" class="dropdown-item">타임딜</a><a href="#" class="dropdown-item">얼리버드</a><a href="#" class="dropdown-item">마감임박</a>
+                        </div>
+                    </li>
+
+                    <!-- 4. 여행정보 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행정보 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-48 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="guides.html" class="dropdown-item">여행 가이드</a><a href="#" class="dropdown-item">비자 정보</a><a href="#" class="dropdown-item">날씨</a><a href="#" class="dropdown-item">준비물 체크리스트</a>
+                        </div>
+                    </li>
+
+                    <!-- 5. 고객센터 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">고객센터 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="inqury.html" class="dropdown-item">문의하기</a><a href="#" class="dropdown-item">예약확인</a><a href="#" class="dropdown-item">FAQ</a><a href="#" class="dropdown-item">공지사항</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION (SPLINE 3D) -->
+    <section class="relative w-full h-[650px] md:h-[800px] overflow-hidden bg-black">
+        <div class="absolute inset-0 z-0">
+            <iframe src='https://my.spline.design/travelworld-TyAtRQMme8KAuRnYbsQZZ7Wy/' frameborder='0' width='100%' height='100%'></iframe>
+        </div>
+        <div class="absolute inset-0 z-10 bg-black/10 flex items-center justify-center text-center">
+            <div class="max-w-7xl mx-auto px-4 w-full">
+                <div class="mb-6 inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-white text-sm font-bold border border-white/30">민솔투어만의 특별한 여행</div>
+                <h1 class="text-white text-4xl md:text-7xl font-black mb-10 leading-tight italic drop-shadow-2xl">어떤 여행을<br>꿈꾸시나요?</h1>
+                <div class="max-w-5xl mx-auto bg-white/95 backdrop-blur-xl shadow-2xl p-4 md:p-8 rounded-[40px] transform translate-y-12 border border-white/20">
+                    <div class="grid grid-cols-1 md:grid-cols-7 gap-3">
+                        <div class="md:col-span-2 bg-gray-50 rounded-2xl h-16 flex items-center px-5 border border-gray-100"><i data-lucide="map-pin" class="text-blue-500 mr-3"></i><div class="text-left"><span class="block text-[10px] text-gray-400 font-bold">Destination</span><span class="text-sm font-bold">어디로 떠나세요?</span></div></div>
+                        <div class="md:col-span-2 bg-gray-50 rounded-2xl h-16 flex items-center px-5 border border-gray-100"><i data-lucide="calendar" class="text-blue-500 mr-3"></i><div class="text-left"><span class="block text-[10px] text-gray-400 font-bold">Schedule</span><span class="text-sm font-bold">일정 선택</span></div></div>
+                        <div class="md:col-span-2 bg-gray-50 rounded-2xl h-16 flex items-center px-5 border border-gray-100"><i data-lucide="plane" class="text-blue-500 mr-3"></i><div class="text-left"><span class="block text-[10px] text-gray-400 font-bold">Departure</span><span class="text-sm font-bold">출발 도시</span></div></div>
+                        <button class="md:col-span-1 bg-blue-600 text-white rounded-2xl flex items-center justify-center hover:bg-blue-700 transition-all shadow-lg"><i data-lucide="search" class="w-7 h-7"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 pt-44 pb-20 space-y-32">
+        
+        <!-- SECTION 1: 타임세일 -->
+        <section id="section_1">
+            <div class="flex items-center justify-between mb-10"><h3 class="text-3xl font-black text-gray-900 tracking-tight">단, 7일⏰ 타임세일 한정특가</h3><button class="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-blue-600 transition-colors">전체보기 <i data-lucide="chevron-right" class="w-4 h-4"></i></button></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[3/4] bg-gray-100 rounded-[32px] overflow-hidden mb-5 shadow-sm group-hover:shadow-2xl transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-5 left-5 z-10"><span class="bg-blue-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg">부산출발</span></div>
+                    </div>
+                    <h4 class="text-[16px] font-bold text-gray-800 leading-snug line-clamp-2 h-12 px-1">[부산] 대마도 2일 vs 후쿠오카 3일 선상 온천여행</h4>
+                    <div class="pt-2 flex items-baseline gap-2 px-1"><span class="text-red-500 text-2xl font-black">25%</span><span class="text-2xl font-black text-gray-900">164,000원~</span></div>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[3/4] bg-gray-100 rounded-[32px] overflow-hidden mb-5 shadow-sm group-hover:shadow-2xl transition-all duration-500"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div>
+                    <h4 class="text-[16px] font-bold text-gray-800 leading-snug line-clamp-2 h-12 px-1">[인천/부산] 오사카/교토 3일 완벽 일주</h4>
+                    <div class="pt-2 flex items-baseline gap-2 px-1"><span class="text-red-500 text-2xl font-black">30%</span><span class="text-2xl font-black text-gray-900">269,000원~</span></div>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[3/4] bg-gray-100 rounded-[32px] overflow-hidden mb-5 shadow-sm group-hover:shadow-2xl transition-all duration-500"><img src="https://images.unsplash.com/photo-1525596662741-e94ff9f26de1?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div>
+                    <h4 class="text-[16px] font-bold text-gray-800 leading-snug line-clamp-2 h-12 px-1">[인천/부산] 싱가포르 5일 #노쇼핑 #특급호텔</h4>
+                    <div class="pt-2 flex items-baseline gap-2 px-1"><span class="text-red-500 text-2xl font-black">15%</span><span class="text-2xl font-black text-gray-900">999,000원~</span></div>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[3/4] bg-gray-100 rounded-[32px] overflow-hidden mb-5 shadow-sm group-hover:shadow-2xl transition-all duration-500"><img src="https://images.unsplash.com/photo-1524230507669-5ff97982bb5e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div>
+                    <h4 class="text-[16px] font-bold text-gray-800 leading-snug line-clamp-2 h-12 px-1">튀르키예 일주 9일 #전일정특급호텔 #열기구</h4>
+                    <div class="pt-2 flex items-baseline gap-2 px-1"><span class="text-red-500 text-2xl font-black">10%</span><span class="text-2xl font-black text-gray-900">2,999,000원~</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: 유류할증료 0원 -->
+        <section id="section_2" class="bg-blue-50 -mx-4 px-4 py-20 rounded-[60px]">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center justify-between mb-10"><div><h3 class="text-3xl font-black text-gray-900 tracking-tight">유류할증료 0원 특가 💰</h3><p class="text-blue-600 font-bold mt-2">지금 예약하면 유류할증료 걱정 끝!</p></div><button class="bg-white px-6 py-3 rounded-full text-xs font-bold shadow-sm hover:bg-blue-600 hover:text-white transition-all">전체보기</button></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-5 rounded-[40px] shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                        <div class="aspect-square rounded-[30px] overflow-hidden mb-5"><img src="https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"></div>
+                        <span class="text-[11px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full">인기휴양지</span><h4 class="text-[15px] font-bold mt-3 h-10 line-clamp-2 italic">푸꾸옥 5일 #풀빌라</h4>
+                        <div class="mt-4 flex flex-col"><span class="text-gray-400 line-through text-xs">649,000원</span><span class="text-xl font-black text-gray-900">519,000원~</span></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-[40px] shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                        <div class="aspect-square rounded-[30px] overflow-hidden mb-5"><img src="https://images.unsplash.com/photo-1526749837599-b4efa9fd259e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"></div>
+                        <span class="text-[11px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full">이색체험</span><h4 class="text-[15px] font-bold mt-3 h-10 line-clamp-2 italic">내몽골 초원 6일 #별밤</h4>
+                        <div class="mt-4 flex flex-col"><span class="text-gray-400 line-through text-xs">999,000원</span><span class="text-xl font-black text-gray-900">799,000원~</span></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-[40px] shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                        <div class="aspect-square rounded-[30px] overflow-hidden mb-5"><img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"></div>
+                        <span class="text-[11px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full">베스트</span><h4 class="text-[15px] font-bold mt-3 h-10 line-clamp-2 italic">시드니 7일 #스테디셀러</h4>
+                        <div class="mt-4 flex flex-col"><span class="text-gray-400 line-through text-xs">1,429,000원</span><span class="text-xl font-black text-gray-900">1,129,000원~</span></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-[40px] shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                        <div class="aspect-square rounded-[30px] overflow-hidden mb-5"><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"></div>
+                        <span class="text-[11px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full">유럽특가</span><h4 class="text-[15px] font-bold mt-3 h-10 line-clamp-2 italic">서유럽 3국 10일 #로맨틱</h4>
+                        <div class="mt-4 flex flex-col"><span class="text-gray-400 line-through text-xs">3,899,000원</span><span class="text-xl font-black text-gray-900">3,299,000원~</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 슬라이드 배너 (수정됨) -->
+        <section id="section_3" class="relative">
+            <div class="relative w-full h-[400px] overflow-hidden rounded-[48px] shadow-2xl flex">
+                <!-- Slide 1 -->
+                <div class="banner-slide active absolute inset-0 bg-cover bg-center items-center px-20" style="background-image: linear-gradient(to right, rgba(37, 99, 235, 0.9), rgba(0,0,0,0)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');">
+                    <div class="z-10 text-white space-y-4">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md italic">SPECIAL EVENT</span>
+                        <h2 class="text-5xl font-black leading-tight italic">라이브 한정<br>시크릿 할인 찬스!</h2>
+                        <button class="bg-white text-blue-600 px-8 py-3 rounded-full text-sm font-black shadow-lg hover:scale-105 transition-all">지금 바로 참여</button>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="banner-slide absolute inset-0 bg-cover bg-center items-center px-20" style="background-image: linear-gradient(to right, rgba(15, 118, 110, 0.9), rgba(0,0,0,0)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1920&q=80');">
+                    <div class="z-10 text-white space-y-4">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md italic">EARLY BIRD</span>
+                        <h2 class="text-5xl font-black leading-tight italic">여름 휴가 미리 준비<br>최대 30% 얼리버드</h2>
+                        <button class="bg-white text-teal-600 px-8 py-3 rounded-full text-sm font-black shadow-lg hover:scale-105 transition-all">여행지 구경하기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 라이브/이벤트 -->
+        <section id="section_4">
+            <div class="flex items-center justify-between mb-10"><h3 class="text-3xl font-black text-gray-900 tracking-tight italic">민솔투어 라이브 채널 📺</h3><button class="text-xs font-bold text-gray-400">전체보기</button></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="relative h-[400px] rounded-[48px] overflow-hidden group cursor-pointer shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-12 flex flex-col justify-end">
+                        <div class="flex items-center gap-2 mb-4"><span class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></span><span class="text-red-500 font-black text-sm uppercase italic">Live Now</span></div>
+                        <h4 class="text-white text-3xl font-black mb-4 italic">몰디브 선착순 50% 할인</h4>
+                    </div>
+                </div>
+                <div class="relative h-[400px] rounded-[48px] overflow-hidden group cursor-pointer shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-12 flex flex-col justify-end">
+                        <span class="text-blue-400 font-black text-sm uppercase mb-4 italic">Next Live</span>
+                        <h4 class="text-white text-3xl font-black mb-4 italic">인도 타지마할 문명 탐험</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: 테마별 추천 -->
+        <section id="section_5">
+            <h3 class="text-3xl font-black text-gray-900 mb-10 italic">당신의 취향대로 떠나는 여행</h3>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="relative aspect-video rounded-[40px] overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center"><span class="text-white text-2xl font-black">#발리 풀빌라</span></div>
+                </div>
+                <div class="relative aspect-video rounded-[40px] overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center"><span class="text-white text-2xl font-black">#파리 자유여행</span></div>
+                </div>
+                <div class="relative aspect-video rounded-[40px] overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center"><span class="text-white text-2xl font-black">#런던 클래식투어</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (SNS 로고 수정됨) -->
+    <footer class="bg-gray-900 text-white pt-24 pb-12 rounded-t-[80px]">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2 space-y-8">
+                    <div class="text-4xl font-black italic text-blue-500">MINSOL TOUR</div>
+                    <p class="text-gray-400 text-sm max-w-sm">가장 안전하고 즐거운 길로 안내하겠습니다.</p>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">Customer Service</h5>
+                    <div class="text-3xl font-black text-blue-500 mb-4 italic">1588-0000</div>
+                    <p class="text-gray-400 text-xs italic">평일 09:00 - 18:00 (공휴일 휴무)</p>
+                </div>
+                <div class="space-y-4">
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">About Us</h5>
+                    <ul class="text-sm text-gray-400 space-y-4 font-bold italic"><li>회사소개</li><li>이용약관</li><li class="text-blue-500">개인정보처리방침</li><li>여행약관</li></ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[11px] text-gray-500 font-bold uppercase italic">© 2024 MINSOL TOUR. Dream Beyond Reality.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 슬라이드 배너 로직
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.banner-slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // 5초마다 슬라이드 전환
+        setInterval(nextSlide, 2000);
+
+        // 아이콘 초기화
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>민솔투어 - 미주 여행의 모든 것</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        
+        /* 네비게이션 드롭다운 설정 */
+        .nav-container::-webkit-scrollbar { display: none; }
+        .nav-container { -ms-overflow-style: none; scrollbar-width: none; overflow-x: visible; }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #4b5563;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f9fafb;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover {
+            background-color: #eff6ff;
+            color: #2563eb;
+            padding-left: 24px;
+        }
+
+        /* 서브페이지 커스텀 스타일 */
+        .filter-checkbox:checked + label { color: #2563eb; font-weight: 700; }
+        .filter-checkbox:checked { background-color: #2563eb; border-color: #2563eb; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- HEADER AREA -->
+    <header class="sticky top-0 bg-white z-50 border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16 gap-4">
+                <a href="index.html" class="text-2xl font-black tracking-tighter text-blue-600 cursor-pointer italic shrink-0 transition-opacity hover:opacity-80">MINSOL TOUR</a>
+                <div class="hidden md:flex flex-1 max-w-2xl h-11 bg-gray-50 border border-gray-200 rounded-full flex items-center px-5 text-sm text-gray-500 shadow-inner">
+                    <i data-lucide="search" class="w-4 h-4 mr-3 text-blue-500"></i> 
+                    <span>거대한 대륙, 미주 어디로 떠나고 싶으신가요?</span>
+                </div>
+                <div class="flex items-center gap-6 text-gray-500 shrink-0">
+                    <button class="flex flex-col items-center group"><i data-lucide="user" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">마이메뉴</span></button>
+                    <button class="flex flex-col items-center group"><i data-lucide="shopping-bag" class="w-5 h-5 group-hover:text-blue-600"></i><span class="text-[10px] mt-1 font-bold">예약내역</span></button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="border-t border-gray-50 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="nav-container flex items-center gap-10 h-12 text-[15px] font-bold text-gray-700 whitespace-nowrap overflow-x-visible">
+                    <li class="flex items-center gap-1.5 text-blue-600 cursor-pointer hover:opacity-80"><i data-lucide="menu" class="w-4 h-4"></i> 전체메뉴</li>
+
+                    <!-- 1. 여행지 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행지 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                             <a href="asia.html" class="dropdown-item">아시아</a><a href="europe.html" class="dropdown-item">유럽</a><a href="americas.html" class="dropdown-item">미주</a><a href="Southeast Asia.html" class="dropdown-item">동남아</a><a href="korea.html" class="dropdown-item">국내</a>
+                        </div>
+                    </li>
+
+                    <!-- 2. 테마여행 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">테마여행 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="honeymoon.html" class="dropdown-item">신혼여행</a><a href="#" class="dropdown-item">가족여행</a><a href="#" class="dropdown-item">혼자여행</a><a href="#" class="dropdown-item">럭셔리</a><a href="#" class="dropdown-item">액티비티</a>
+                        </div>
+                    </li>
+
+                    <!-- 3. 특가/프로모션 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">특가/프로모션 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="special price.html" class="dropdown-item">오늘의 특가</a><a href="#" class="dropdown-item">타임딜</a><a href="#" class="dropdown-item">얼리버드</a><a href="#" class="dropdown-item">마감임박</a>
+                        </div>
+                    </li>
+
+                    <!-- 4. 여행정보 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">여행정보 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-48 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="guides.html" class="dropdown-item">여행 가이드</a><a href="#" class="dropdown-item">비자 정보</a><a href="#" class="dropdown-item">날씨</a><a href="#" class="dropdown-item">체크리스트</a>
+                        </div>
+                    </li>
+
+                    <!-- 5. 고객센터 -->
+                    <li class="relative group h-full flex items-center">
+                        <div class="cursor-pointer group-hover:text-blue-600 transition-colors flex items-center gap-1 py-3">고객센터 <i data-lucide="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform"></i></div>
+                        <div class="dropdown-menu absolute top-[48px] left-0 w-40 bg-white shadow-2xl border border-gray-100 rounded-2xl py-2 z-[100]">
+                            <a href="inqury.html" class="dropdown-item">문의하기</a><a href="#" class="dropdown-item">예약확인</a><a href="#" class="dropdown-item">FAQ</a><a href="#" class="dropdown-item">공지사항</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- SUB PAGE MAIN CONTENT -->
+    <div class="max-w-7xl mx-auto px-4 py-12">
+        
+        <!-- Breadcrumbs & Result Count -->
+        <div class="mb-12">
+            <div class="flex items-center gap-2 text-xs font-bold text-gray-400 mb-4 italic uppercase">
+                <span>Home</span> <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span class="text-blue-600">Americas Entire</span>
+            </div>
+            <h2 class="text-4xl font-black italic tracking-tight">미주 <span class="text-blue-600">76</span>개의 추천 상품</h2>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-10">
+            
+            <!-- SIDEBAR: FILTER SECTION -->
+            <aside class="w-full lg:w-72 shrink-0 space-y-8">
+                <div class="bg-white rounded-[40px] p-8 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
+                        <h3 class="font-black italic text-lg text-blue-600 uppercase tracking-widest">Filters</h3>
+                        <button class="text-[10px] font-bold text-gray-300 hover:text-blue-600 transition-colors italic underline">RESET</button>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-xs font-black mb-5 italic tracking-[0.2em] text-gray-400 uppercase">Region</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" id="reg_usa_east" checked class="filter-checkbox w-4 h-4 rounded-md border-gray-200 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer">
+                                    <label for="reg_usa_east" class="text-sm font-bold text-gray-600 cursor-pointer hover:text-blue-600 transition-colors">미동부</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" id="reg_usa_west" checked class="filter-checkbox w-4 h-4 rounded-md border-gray-200 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer">
+                                    <label for="reg_usa_west" class="text-sm font-bold text-gray-600 cursor-pointer hover:text-blue-600 transition-colors">미서부</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" id="reg_canada" class="filter-checkbox w-4 h-4 rounded-md border-gray-200 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer">
+                                    <label for="reg_canada" class="text-sm font-bold text-gray-600 cursor-pointer hover:text-blue-600 transition-colors">캐나다</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" id="reg_hawaii" class="filter-checkbox w-4 h-4 rounded-md border-gray-200 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer">
+                                    <label for="reg_hawaii" class="text-sm font-bold text-gray-600 cursor-pointer hover:text-blue-600 transition-colors">하와이</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" id="reg_latin" class="filter-checkbox w-4 h-4 rounded-md border-gray-200 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer">
+                                    <label for="reg_latin" class="text-sm font-bold text-gray-600 cursor-pointer hover:text-blue-600 transition-colors">중남미</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-8 border-t border-gray-50">
+                            <h4 class="text-xs font-black mb-5 italic tracking-[0.2em] text-gray-400 uppercase">Budget</h4>
+                            <input type="range" class="w-full h-1.5 bg-gray-100 rounded-full appearance-none cursor-pointer accent-blue-600">
+                            <div class="flex justify-between mt-3 text-[10px] font-bold text-gray-400 italic">
+                                <span>0원</span><span>500만원+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- PRODUCT LIST AREA -->
+            <div class="flex-1 space-y-8">
+                
+                <!-- Sort & View Options -->
+                <div class="flex items-center justify-between bg-white px-8 py-4 rounded-full border border-gray-100 shadow-sm text-sm font-bold text-gray-400 italic">
+                    <div class="flex gap-8">
+                        <span class="text-blue-600 cursor-pointer">추천순</span>
+                        <span class="hover:text-blue-600 cursor-pointer transition-colors">낮은가격순</span>
+                        <span class="hover:text-blue-600 cursor-pointer transition-colors">높은가격순</span>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-4 text-gray-200">
+                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600 cursor-pointer"></i>
+                        <i data-lucide="list" class="w-4 h-4 cursor-pointer hover:text-blue-600 transition-colors"></i>
+                    </div>
+                </div>
+
+                <!-- Products Grid (6 Items Per Page) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    
+                    <!-- Item 1: New York -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                            <div class="absolute top-6 left-6 flex gap-2">
+                                <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg italic">TOP SELLER</span>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 미국 뉴욕</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">뉴욕 스마트패스 자유여행 8일 #맨해튼중심호텔 #브로드웨이</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.9 <span class="text-gray-300 ml-1">(3,281)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">2,890,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Los Angeles / West -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                            <div class="absolute top-6 left-6"><span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg italic">HOT</span></div>
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 미국 미서부</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">미서부 3대 캐년+라스베이거스 10일 #그랜드캐년 #유니버셜</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.8 <span class="text-gray-300 ml-1">(1,842)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">3,450,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: Canada -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 캐나다 밴쿠버</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">캐나디안 로키의 정수 8일 #밴프 #레이크루이스 #글레이셔</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.9 <span class="text-gray-300 ml-1">(756)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">4,120,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Hawaii -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 미국 하와이</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">오아후 섬 일주+와이키키 휴양 6일 #렌터카포함 #거북이스노클링</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.7 <span class="text-gray-300 ml-1">(1,250)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">2,150,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: Mexico / Cancun -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 멕시코 칸쿤</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">칸쿤 올인클루시브 허니문 7일 #럭셔리리조트 #여인천하투어</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.9 <span class="text-gray-300 ml-1">(892)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">3,980,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6: Peru / South America -->
+                    <div class="group cursor-pointer bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="relative aspect-[4/5] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex items-center gap-2 text-[10px] font-black text-blue-500 mb-3 italic"><i data-lucide="map-pin" class="w-3 h-3"></i> 페루 마추픽추</div>
+                            <h4 class="text-[17px] font-black text-gray-800 leading-snug line-clamp-2 h-12 italic mb-6">중남미 버킷리스트 15일 #마추픽추 #우유니사막 #이구아수폭포</h4>
+                            <div class="pt-6 border-t border-gray-50 flex items-end justify-between">
+                                <div class="flex items-center gap-1 text-[11px] text-orange-400 font-bold italic"><i data-lucide="star" class="w-3 h-3 fill-orange-400"></i> 4.8 <span class="text-gray-300 ml-1">(315)</span></div>
+                                <div class="text-2xl font-black text-gray-900 italic">11,500,000<span class="text-sm">원~</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Pagination (1 to 5) -->
+                <div class="flex justify-center pt-16">
+                    <div class="flex gap-3">
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center bg-blue-600 text-white shadow-xl shadow-blue-200 font-black italic">1</button>
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center border border-gray-200 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all font-black italic">2</button>
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center border border-gray-200 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all font-black italic">3</button>
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center border border-gray-200 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all font-black italic">4</button>
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center border border-gray-200 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all font-black italic">5</button>
+                        <button class="w-12 h-12 rounded-full flex items-center justify-center border border-gray-200 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all font-black italic"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (SNS 로고 수정됨) -->
+    <footer class="bg-gray-900 text-white pt-24 pb-12 rounded-t-[80px]">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2 space-y-8">
+                    <div class="text-4xl font-black italic text-blue-500">MINSOL TOUR</div>
+                    <p class="text-gray-400 text-sm max-w-sm">가장 안전하고 즐거운 길로 안내하겠습니다.</p>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-600 transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">Customer Service</h5>
+                    <div class="text-3xl font-black text-blue-500 mb-4 italic">1588-0000</div>
+                    <p class="text-gray-400 text-xs italic">평일 09:00 - 18:00 (공휴일 휴무)</p>
+                </div>
+                <div class="space-y-4">
+                    <h5 class="font-black text-lg mb-8 italic tracking-widest">About Us</h5>
+                    <ul class="text-sm text-gray-400 space-y-4 font-bold italic"><li>회사소개</li><li>이용약관</li><li class="text-blue-500">개인정보처리방침</li><li>여행약관</li></ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[11px] text-gray-500 font-bold uppercase italic">© 2024 MINSOL TOUR. Dream Beyond Reality.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
